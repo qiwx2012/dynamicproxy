@@ -1,0 +1,29 @@
+group 'dynamicproxy'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter(){ url 'https://maven.aliyun.com/repository/jcenter'}
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/java' // 指定源码目录
+        }
+        resources {
+            srcDir 'src/resources' //资源目录
+        }
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.2.1'
+    implementation 'com.google.code.gson:gson:2.8.6'
+}
