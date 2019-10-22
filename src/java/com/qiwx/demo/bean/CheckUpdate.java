@@ -1,4 +1,4 @@
-package com.qiwx.demo;
+package com.qiwx.demo.bean;
 
 public class CheckUpdate {
     private boolean hasUpdate;

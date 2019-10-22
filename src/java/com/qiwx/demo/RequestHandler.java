@@ -1,6 +1,7 @@
 package com.qiwx.demo;
 
 import com.google.gson.Gson;
+import com.qiwx.demo.bean.User;
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -43,14 +44,21 @@ public class RequestHandler implements InvocationHandler {
 
         }
         //解析请求参数，然后拼接到url
+//        if(params!=null){
+//            url+="?";
+//            for (int i = 0; i < params.length; i++) {
+//               Query query=parameters[i].getAnnotation(Query.class);
+//               url+=query.value()+"="+params[i].toString();
+//               if(i<params.length-1){
+//                   url+="$";
+//               }
+//            }
+//
+//        }
         if(params!=null){
-            url+="?";
             for (int i = 0; i < params.length; i++) {
                Query query=parameters[i].getAnnotation(Query.class);
-               url+=query.value()+"="+params[i].toString();
-               if(i<params.length-1){
-                   url+="$";
-               }
+              url= String.format(url,params[i].toString());
             }
 
         }
@@ -68,7 +76,7 @@ public class RequestHandler implements InvocationHandler {
             System.out.println("请求地址是："+getUrl);
             if(response.isSuccessful()){
                 String responseStr=new String(response.body().bytes());
-                observableEmitter.onNext(responseStr);
+                observableEmitter.onNext(new Gson().fromJson(responseStr,User.class));
             }else {
                 observableEmitter.onError(new IllegalAccessException("http request failed"));
             }
